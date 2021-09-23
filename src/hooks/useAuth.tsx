@@ -37,6 +37,7 @@ function AuthProvider({ children }: AuthProviderData) {
   const [userToken, setUserToken] = useState('');
 
   const { CLIENT_ID } = process.env;
+  console.log(CLIENT_ID);
 
   async function signIn() {
     try {
@@ -64,9 +65,14 @@ function AuthProvider({ children }: AuthProviderData) {
         
         api.defaults.headers.authorization = `Bearer ${authResponse.params.access_token}`;
 
-        const userResponse = await api.get<User>('/users');
+        const userResponse = await api.get('/users');
 
-        setUser(userResponse.data);
+        setUser({
+          id: userResponse.data.data[0].id,
+          display_name: userResponse.data.data[0].display_name,
+          email: userResponse.data.data[0].email,
+          profile_image_url: userResponse.data.data[0].profile_image_url
+        });
 
         setUserToken(authResponse.params.access_token);
 
