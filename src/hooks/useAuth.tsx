@@ -37,7 +37,6 @@ function AuthProvider({ children }: AuthProviderData) {
   const [userToken, setUserToken] = useState('');
 
   const { CLIENT_ID } = process.env;
-  console.log(CLIENT_ID);
 
   async function signIn() {
     try {
